@@ -1,6 +1,7 @@
 package com.BitzNomad.identity_service.entity.Auth;
 
 import com.BitzNomad.identity_service.entity.BaseEntity;
+import com.BitzNomad.identity_service.entity.Restaurant.Restaurant;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -37,4 +38,7 @@ public class User extends BaseEntity<String> {
 
     @ManyToMany
     Set<Role> roles;
+
+    @OneToMany(mappedBy = "owner")
+    Set<Restaurant> restaurants;
 }

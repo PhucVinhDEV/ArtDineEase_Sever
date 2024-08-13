@@ -2,7 +2,7 @@ package com.BitzNomad.identity_service.ControllerTest;
 
 import com.BitzNomad.identity_service.DtoReponese.UserReponese;
 import com.BitzNomad.identity_service.DtoRequest.UserCreateRequest;
-import com.BitzNomad.identity_service.Service.UserService;
+import com.BitzNomad.identity_service.Service.AuthService.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

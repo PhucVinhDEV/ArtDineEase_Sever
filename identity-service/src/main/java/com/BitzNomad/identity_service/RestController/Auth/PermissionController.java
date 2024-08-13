@@ -3,7 +3,7 @@ package com.BitzNomad.identity_service.RestController.Auth;
 import com.BitzNomad.identity_service.DtoReponese.ApiResponse;
 import com.BitzNomad.identity_service.DtoReponese.PermissionReponese;
 import com.BitzNomad.identity_service.DtoRequest.PermissionRequest;
-import com.BitzNomad.identity_service.Service.PermissionService;
+import com.BitzNomad.identity_service.Service.AuthService.PermissionService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;

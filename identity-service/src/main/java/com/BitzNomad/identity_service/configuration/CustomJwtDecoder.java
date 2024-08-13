@@ -21,7 +21,8 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class CustomJwtDecoder implements JwtDecoder {
 
-    private final AuthenticationService authenticationService;
+    @Autowired
+    AuthenticationService authenticationService;
     private NimbusJwtDecoder nimbusJwtDecoder = null;
 
     @Value("${jwt.secretKey}")

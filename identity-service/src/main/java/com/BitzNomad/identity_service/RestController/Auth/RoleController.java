@@ -4,7 +4,7 @@ package com.BitzNomad.identity_service.RestController.Auth;
 import com.BitzNomad.identity_service.DtoReponese.ApiResponse;
 import com.BitzNomad.identity_service.DtoReponese.RoleReponese;
 import com.BitzNomad.identity_service.DtoRequest.RoleRequest;
-import com.BitzNomad.identity_service.Service.RoleService;
+import com.BitzNomad.identity_service.Service.AuthService.RoleService;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import org.springframework.beans.factory.annotation.Autowired;

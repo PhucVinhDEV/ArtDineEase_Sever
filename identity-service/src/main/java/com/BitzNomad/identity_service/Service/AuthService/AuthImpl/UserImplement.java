@@ -1,4 +1,4 @@
-package com.BitzNomad.identity_service.Service;
+package com.BitzNomad.identity_service.Service.AuthService.AuthImpl;
 
 import com.BitzNomad.identity_service.DtoReponese.UserReponese;
 import com.BitzNomad.identity_service.DtoRequest.UserCreateRequest;
@@ -6,14 +6,12 @@ import com.BitzNomad.identity_service.DtoRequest.UserUpdateRequest;
 import com.BitzNomad.identity_service.Exception.AppException;
 import com.BitzNomad.identity_service.Exception.ErrorCode;
 import com.BitzNomad.identity_service.Mapper.Auth.UserMapper;
+import com.BitzNomad.identity_service.Service.AuthService.UserService;
 import com.BitzNomad.identity_service.contant.PredefineRole;
 import com.BitzNomad.identity_service.entity.Auth.Role;
 import com.BitzNomad.identity_service.entity.Auth.User;
 import com.BitzNomad.identity_service.repository.RoleRepository;
 import com.BitzNomad.identity_service.repository.UserRepository;
-import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -26,36 +24,15 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.List;
 
-
-public interface UserService {
-
-    UserReponese createUser(UserCreateRequest request);
-
-    UserReponese getMyInfo();
-
-    User getUserById(String id);
-
-    User updateUser(UserUpdateRequest request);
-
-    void deleteUser(String id);
-
-    List<UserReponese> getAllUsers();
-
-
-    boolean existsByUsername(String email);
-}
-
 @Service
-@RequiredArgsConstructor
-@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Slf4j
-class UserImplement implements UserService{
+class UserImplement implements UserService {
     @Autowired
-   UserRepository userRepository;
+    UserRepository userRepository;
     @Autowired
-   PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
     @Autowired
-     RoleRepository roleRepository;
+    RoleRepository roleRepository;
 
     @Autowired
     UserMapper userMapper;
@@ -72,7 +49,7 @@ class UserImplement implements UserService{
         user.setRoles(roles);
         try {
             user = userRepository.save(user);
-        } catch (DataIntegrityViolationException exception){
+        } catch (DataIntegrityViolationException exception) {
             throw new AppException(ErrorCode.USER_NOT_EXISTED);
         }
         // Return the saved user entity
