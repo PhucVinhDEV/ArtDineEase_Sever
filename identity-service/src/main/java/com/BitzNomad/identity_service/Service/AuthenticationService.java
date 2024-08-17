@@ -154,8 +154,7 @@ public class AuthenticationService {
 
         String token = generateToken(user);
         return  AuthenticationResponse.builder()
-                .token(request.getToken())
-                .refreshToken(token)
+                .token(token)
                 .authenticated(true)
                 .build();
     }
@@ -186,6 +185,7 @@ public class AuthenticationService {
 
         return IntrospecResponsee.builder()
                 .valid(isValid)
+                .expiration( VerifyToken(request.getToken(),false).getJWTClaimsSet().getExpirationTime())
                 .build();
     }
 

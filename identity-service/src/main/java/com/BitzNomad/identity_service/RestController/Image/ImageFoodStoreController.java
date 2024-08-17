@@ -2,12 +2,10 @@ package com.BitzNomad.identity_service.RestController.Image;
 
 import com.BitzNomad.identity_service.DtoReponese.ApiResponse;
 import com.BitzNomad.identity_service.DtoReponese.ImageDTOReponese;
-
 import com.BitzNomad.identity_service.Service.CloudiaryService.CloudinaryService;
-import com.BitzNomad.identity_service.Service.CloudiaryService.ImageOfRestaurantService;
+import com.BitzNomad.identity_service.Service.CloudiaryService.ImageOfFoodStoreService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,13 +15,13 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/ImageFoodStore")
-public class ImageRestaurantController {
+public class ImageFoodStoreController {
 
     @Autowired
     CloudinaryService cloudinaryService;
 
     @Autowired
-    ImageOfRestaurantService imageOfRestaurantService;
+    ImageOfFoodStoreService imageOfFoodStoreService;
 
     @PostMapping
     @Operation(summary = "Upload an image", description = "Uploads an image file to Cloudinary and returns the upload result. (Test PostMan nha)")
@@ -36,7 +34,7 @@ public class ImageRestaurantController {
 
         return ApiResponse.<Set<ImageDTOReponese>>builder()
                 .status(201)
-                .result(imageOfRestaurantService.saveImageOfRestaurant(file,restaurantID,typeOfImg))
+                .result(imageOfFoodStoreService.saveImageOfFoodStore(file,restaurantID,typeOfImg))
                 .build();
     }
 

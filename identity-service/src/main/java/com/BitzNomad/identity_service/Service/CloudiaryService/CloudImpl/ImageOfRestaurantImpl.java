@@ -2,14 +2,11 @@ package com.BitzNomad.identity_service.Service.CloudiaryService.CloudImpl;
 
 import com.BitzNomad.identity_service.DtoReponese.ImageDTOReponese;
 import com.BitzNomad.identity_service.Entity.Image.ImageOfFoodStore;
-
-
 import com.BitzNomad.identity_service.Mapper.ImageMapper;
 import com.BitzNomad.identity_service.Respository.ImgRepository.ImageOfFoodStoreRepository;
 import com.BitzNomad.identity_service.Respository.RestaurantRepository.FoodStoreRepository;
-
 import com.BitzNomad.identity_service.Service.CloudiaryService.CloudinaryService;
-import com.BitzNomad.identity_service.Service.CloudiaryService.ImageOfRestaurantService;
+import com.BitzNomad.identity_service.Service.CloudiaryService.ImageOfFoodStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +16,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Service
-public class ImageOfRestaurantImpl implements ImageOfRestaurantService {
+public class ImageOfRestaurantImpl implements ImageOfFoodStoreService {
 
     @Autowired
     ImageOfFoodStoreRepository imageOfFoodStoreRepository;
@@ -33,7 +30,7 @@ public class ImageOfRestaurantImpl implements ImageOfRestaurantService {
     @Autowired
     CloudinaryService cloudinaryService;
     @Override
-    public Set<ImageDTOReponese> saveImageOfRestaurant(MultipartFile[] imageOfRestaurant,Long restaurantID, String typeofImage) throws Exception {
+    public Set<ImageDTOReponese> saveImageOfFoodStore(MultipartFile[] imageOfRestaurant,Long restaurantID, String typeofImage) throws Exception {
         Set<ImageDTOReponese> imageDTOReponses = new HashSet<>();
         for (MultipartFile file : imageOfRestaurant) {
           String uuid = java.util.UUID.randomUUID().toString();

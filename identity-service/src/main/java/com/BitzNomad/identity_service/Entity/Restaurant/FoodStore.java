@@ -35,6 +35,10 @@ public class FoodStore extends BaseEntity<String> {
     @JoinColumn(name = "user_id", nullable = false)
     User owner;
 
+    @ManyToOne
+    @JoinColumn(name = "catagoryoffoodstore_id", nullable = false)
+    CategoryOfFoodStore catagory;
+
     @OneToMany(mappedBy = "foodStore")
     Set<TableOfFoodStore> tables;
 
@@ -46,6 +50,9 @@ public class FoodStore extends BaseEntity<String> {
 
     @OneToMany(mappedBy = "foodStore")
     Set<Product> products;
+
+    @OneToMany(mappedBy = "foodStore")
+    Set<TopicFoodStore> topicFoodStores;
 
     @OneToMany(mappedBy = "foodStore")
     Set<ImageOfFoodStore> imageOfFoodStores;

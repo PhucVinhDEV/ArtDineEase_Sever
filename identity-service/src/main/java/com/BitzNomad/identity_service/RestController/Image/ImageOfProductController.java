@@ -4,7 +4,6 @@ import com.BitzNomad.identity_service.DtoReponese.ApiResponse;
 import com.BitzNomad.identity_service.DtoReponese.ImageDTOReponese;
 import com.BitzNomad.identity_service.Service.CloudiaryService.CloudinaryService;
 import com.BitzNomad.identity_service.Service.CloudiaryService.ImageOfProductService;
-import com.BitzNomad.identity_service.Service.CloudiaryService.ImageOfRestaurantService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;

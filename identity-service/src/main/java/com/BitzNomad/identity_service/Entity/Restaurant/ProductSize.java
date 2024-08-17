@@ -1,5 +1,7 @@
 package com.BitzNomad.identity_service.Entity.Restaurant;
 
+import com.BitzNomad.identity_service.Entity.Image.ImageOfProduct;
+import com.BitzNomad.identity_service.Entity.Image.ImageOfProductSize;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -36,4 +38,7 @@ public class ProductSize {
 
     @OneToMany(mappedBy = "productSize")
     Set<OrderDetail> orderDetails;
+
+    @OneToMany(mappedBy = "productSize")
+    Set<ImageOfProductSize> imageOfProductSizes;
 }

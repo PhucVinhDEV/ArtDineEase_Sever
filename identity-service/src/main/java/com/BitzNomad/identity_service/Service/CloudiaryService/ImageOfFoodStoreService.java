@@ -7,6 +7,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Set;
 
-public interface ImageOfRestaurantService {
-    Set<ImageDTOReponese> saveImageOfRestaurant(MultipartFile[] imageOfRestaurant, Long restaurantID, String typeofImage) throws Exception;
+public interface ImageOfFoodStoreService {
+    Set<ImageDTOReponese> saveImageOfFoodStore(MultipartFile[] imageOfRestaurant, Long restaurantID, String typeofImage) throws Exception;
 }

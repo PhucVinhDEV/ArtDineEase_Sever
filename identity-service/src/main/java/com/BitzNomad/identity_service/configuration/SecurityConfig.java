@@ -36,7 +36,7 @@ import javax.crypto.spec.SecretKeySpec;
 public class SecurityConfig {
 
     private final String[] PUBLIC_ENDPONIT = {"/api/user","/auth/login"
-            ,"/auth/logout","/auth/instros``````````````````````````````````````pec","/auth/refesh",
+            ,"/auth/logout","/auth/instrospec","/auth/refesh",
             "/auth/outbound/authentication","/user/myinfo"};
 
     // phai dc tat truoc khi public Error *********************************
