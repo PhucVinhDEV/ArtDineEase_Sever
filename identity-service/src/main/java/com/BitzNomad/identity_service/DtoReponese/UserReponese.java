@@ -9,9 +9,10 @@ import java.util.Set;
 public class UserReponese {
 
     private String id;
-    private String username;
+    private String email;
     private String firstName;
     private String lastName;
     private LocalDate dob;
     Set<RoleReponese> roles;
+
 }

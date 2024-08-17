@@ -1,5 +1,8 @@
 package com.BitzNomad.identity_service.configuration;
 
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +47,7 @@ public class SecurityConfig {
     @Value("${jwt.secretKey}")
     private String SignerKey;
 
-    private final CustomJwtDecoder customJwtDecoder;
+
 
     @Bean
     public SecurityFilterChain filterChain( HttpSecurity httpSecurity) throws Exception {
@@ -59,7 +62,6 @@ public class SecurityConfig {
                     oauth2.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())
                             .jwtAuthenticationConverter(jwtAuthenticationConverter())
                     ).authenticationEntryPoint(new JwtAuthenticationEntryPoint()));
-
 
                 httpSecurity.csrf(AbstractHttpConfigurer::disable);
 
@@ -95,5 +97,13 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return new CorsFilter(source);
+    }
+
+    @Bean
+    public OpenAPI customOpenAPI() {
+        return new OpenAPI()
+                .components(new Components()
+                        .addSecuritySchemes("bearer-key",
+                                new SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT")));
     }
 }

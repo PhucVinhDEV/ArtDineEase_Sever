@@ -9,8 +9,9 @@ import com.BitzNomad.identity_service.Exception.ErrorCode;
 import com.BitzNomad.identity_service.Service.AuthenticationService;
 import com.BitzNomad.identity_service.Service.MailerService;
 import com.BitzNomad.identity_service.Service.AuthService.UserService;
-import com.BitzNomad.identity_service.entity.Auth.User;
+import com.BitzNomad.identity_service.Entity.Auth.User;
 import com.nimbusds.jose.JOSEException;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.mail.MessagingException;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -22,6 +23,7 @@ import java.util.Random;
 
 @RestController
 @RequestMapping("/auth")
+@SecurityRequirement(name = "bearer-key")
 @FieldDefaults(level =  AccessLevel.PRIVATE )
 public class AuthenticationController {
 
@@ -69,7 +71,6 @@ public class AuthenticationController {
     }
     @PostMapping("/instrospec")
     ApiResponse<IntrospecResponsee>  authenticate(@RequestBody IntrospecRequest request) throws ParseException, JOSEException {
-
         IntrospecResponsee result = authenticationService.Instropec(request);
         return  ApiResponse.<IntrospecResponsee>builder()
                 .status(201)
@@ -79,6 +80,7 @@ public class AuthenticationController {
 
 
     @PostMapping(value = "/api/send-verify")
+    @SecurityRequirement(name = "bearer-key")
     public ApiResponse<Integer> sendverify(@RequestParam("Email") String Email) {
         Random random = new Random();
         int min = 100000;
@@ -107,7 +109,7 @@ public class AuthenticationController {
 
     }
 
-    private String formatEmailBody(int verificationCode,User user) {
+    private String formatEmailBody(int verificationCode, User user) {
         return "<html>" +
                 "<body>" +
                 "<h2>Your Verification Code</h2>" +
@@ -121,4 +123,6 @@ public class AuthenticationController {
                 "</body>" +
                 "</html>";
     }
+
+
 }

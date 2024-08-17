@@ -2,7 +2,7 @@ package com.BitzNomad.identity_service.Mapper.Auth;
 
 import com.BitzNomad.identity_service.DtoReponese.PermissionReponese;
 import com.BitzNomad.identity_service.DtoRequest.PermissionRequest;
-import com.BitzNomad.identity_service.entity.Auth.Permission;
+import com.BitzNomad.identity_service.Entity.Auth.Permission;
 import org.modelmapper.ModelMapper;
 
 public class PermissionMapper {

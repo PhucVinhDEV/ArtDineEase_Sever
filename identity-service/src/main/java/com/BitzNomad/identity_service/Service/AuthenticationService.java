@@ -2,28 +2,33 @@ package com.BitzNomad.identity_service.Service;
 
 import com.BitzNomad.identity_service.DtoReponese.AuthenticationResponse;
 import com.BitzNomad.identity_service.DtoReponese.IntrospecResponsee;
+import com.BitzNomad.identity_service.DtoReponese.UserReponese;
 import com.BitzNomad.identity_service.DtoRequest.*;
 import com.BitzNomad.identity_service.Exception.AppException;
 import com.BitzNomad.identity_service.Exception.ErrorCode;
+import com.BitzNomad.identity_service.Mapper.Auth.UserMapper;
 import com.BitzNomad.identity_service.Utils.RandomPasswordGenerator;
 import com.BitzNomad.identity_service.contant.PredefineRole;
-import com.BitzNomad.identity_service.entity.InvalidatedToken;
-import com.BitzNomad.identity_service.entity.Auth.Role;
-import com.BitzNomad.identity_service.entity.Auth.User;
-import com.BitzNomad.identity_service.repository.InvalidatedRepository;
-import com.BitzNomad.identity_service.repository.httpclient.OutboundIdentityClient;
-import com.BitzNomad.identity_service.repository.UserRepository;
-import com.BitzNomad.identity_service.repository.httpclient.OutboundUserClient;
+import com.BitzNomad.identity_service.Entity.InvalidatedToken;
+import com.BitzNomad.identity_service.Entity.Auth.Role;
+import com.BitzNomad.identity_service.Entity.Auth.User;
+import com.BitzNomad.identity_service.Respository.InvalidatedRepository;
+import com.BitzNomad.identity_service.Respository.httpclient.OutboundIdentityClient;
+import com.BitzNomad.identity_service.Respository.UserRepository;
+import com.BitzNomad.identity_service.Respository.httpclient.OutboundUserClient;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -79,9 +84,14 @@ public class AuthenticationService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    UserMapper userMapper;
+
+    @Autowired
+    MailerService mailerService;
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        var user = userRepository.findByUsername(request.getUsername()).orElseThrow(() -> new AppException(ErrorCode.UserExitsted));
+        var user = userRepository.findByEmail(request.getUsername()).orElseThrow(() -> new AppException(ErrorCode.UserExitsted));
         boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
         if (!authenticated) {
             throw new AppException(ErrorCode.USER_NOT_EXISTED);
@@ -99,7 +109,7 @@ public class AuthenticationService {
         JWSHeader header = new JWSHeader(JWSAlgorithm.HS512);
 
         JWTClaimsSet jwtClaimsSet = new JWTClaimsSet.Builder()
-                .subject(user.getUsername())
+                .subject(user.getEmail())
                 .issuer("BitzNomad.com")
                 .issueTime(new Date())
                 .expirationTime(new Date(
@@ -121,6 +131,7 @@ public class AuthenticationService {
         }
     }
     public AuthenticationResponse refeshToken(RefeshRequest request) throws ParseException, JOSEException {
+
             var SingJWT = VerifyToken(request.getToken(),true);
 
             var jit = SingJWT.getJWTClaimsSet().getJWTID();
@@ -136,14 +147,15 @@ public class AuthenticationService {
 
             var u = SingJWT.getJWTClaimsSet().getSubject();
 
-            var user = userRepository.findByUsername(u).orElseThrow(
+            var user = userRepository.findByEmail(u).orElseThrow(
                     () -> new AppException(ErrorCode.UNAUTHORIZED)
             );
 
 
         String token = generateToken(user);
         return  AuthenticationResponse.builder()
-                .token(token)
+                .token(request.getToken())
+                .refreshToken(token)
                 .authenticated(true)
                 .build();
     }
@@ -224,11 +236,12 @@ public class AuthenticationService {
         roles.add(Role.builder()
                 .name(PredefineRole.USER_ROLE)
                 .build());
-
-        var user = userRepository.findByUsername(userInfo.getEmail()).orElseGet(
+        var password = RandomPasswordGenerator.generateRandomPassword(8);
+        var user = userRepository.findByEmail(userInfo.getEmail()).orElseGet(
                 () -> userRepository.save(User.builder()
                                 .firstName(userInfo.getGivenName())
-                                .username(userInfo.getEmail())
+                                .email(userInfo.getEmail())
+                                .password(passwordEncoder.encode(password))
                                 .lastName(userInfo.getFamilyName())
                                 .roles(roles)
                         .build())
@@ -238,11 +251,53 @@ public class AuthenticationService {
 
         var token = generateToken(user);
 
-        log.info(RandomPasswordGenerator.generateRandomPassword(8));
+
+        UserReponese u = userMapper.convertUserToReponese(user);
+        MailInfo mailSend = new MailInfo();
+        mailSend.setFrom("ArtDineEase");
+        mailSend.setTo(u.getEmail());
+        mailSend.setSubject("Your Temporary Password With ArtDineEase");
+        mailSend.setBody(formatEmailBody(u,password));
+        try {
+            mailerService.send(mailSend);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e.getMessage());
+        }
 
         return AuthenticationResponse.builder()
                 .authenticated(true)
                 .token(token)
                 .build();
+    }
+    private String formatEmailBody( UserReponese user , String temporaryPassword) {
+        return "<html>" +
+                "<head>" +
+                "<style>" +
+                "body { font-family: Arial, sans-serif; line-height: 1.6; margin: 0; padding: 0; background-color: #f4f4f4; }" +
+                ".container { width: 80%; margin: 0 auto; background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }" +
+                "h2 { color: #333333; }" +
+                "p { color: #555555; }" +
+                ".temporary-password { font-size: 20px; font-weight: bold; color: #e63946; }" +
+                ".footer { margin-top: 20px; font-size: 12px; color: #888888; }" +
+                "</style>" +
+                "</head>" +
+                "<body>" +
+                "<div class='container'>" +
+                "<h2>Your Temporary Password</h2>" +
+                "<p>Dear " + user.getLastName() + " " + user.getFirstName() + ",</p>" +
+                "<p>Your temporary password is:</p>" +
+                "<p class='temporary-password'>" + temporaryPassword + "</p>" +
+                "<p>Please use this password to log in and update your password immediately to ensure the security of your account.</p>" +
+                "<br>" +
+                "<p>Best regards,</p>" +
+                "<p>ArtDineEase</p>" +
+                "<div class='footer'>" +
+                "<p>If you did not request this password reset, please ignore this email or contact support immediately.</p>" +
+                "<p>&copy; 2024 ArtDineEase. All rights reserved.</p>" +
+                "</div>" +
+                "</div>" +
+                "</body>" +
+                "</html>";
     }
 }

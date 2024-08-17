@@ -6,6 +6,7 @@ import com.BitzNomad.identity_service.DtoRequest.UserCreateRequest;
 import com.BitzNomad.identity_service.DtoRequest.UserUpdateRequest;
 import com.BitzNomad.identity_service.Mapper.Auth.UserMapper;
 import com.BitzNomad.identity_service.Service.AuthService.UserService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
@@ -23,6 +24,7 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/api/user")
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@SecurityRequirement(name = "bearer-key")
 public class UserRestController {
 
 
@@ -35,6 +37,7 @@ public class UserRestController {
     @PostMapping
     ApiResponse<UserReponese> createUser( @RequestBody @Valid UserCreateRequest request) {
         log.info("User created");
+
         return ApiResponse.<UserReponese>builder()
                 .status(HttpStatus.CREATED.value())
                 .message("User created")

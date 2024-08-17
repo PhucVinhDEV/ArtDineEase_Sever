@@ -4,6 +4,7 @@ import com.BitzNomad.identity_service.DtoReponese.ApiResponse;
 import com.BitzNomad.identity_service.DtoReponese.PermissionReponese;
 import com.BitzNomad.identity_service.DtoRequest.PermissionRequest;
 import com.BitzNomad.identity_service.Service.AuthService.PermissionService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.AccessLevel;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ public class PermissionController {
     PermissionService permissionService;
 
     @PostMapping
+    @SecurityRequirement(name = "bearer-key")
     ApiResponse<PermissionReponese> CreatePermission(@RequestBody PermissionRequest request) {
         return  ApiResponse.<PermissionReponese>builder()
                 .result(permissionService.create(request))
@@ -29,6 +31,7 @@ public class PermissionController {
     }
 
     @GetMapping
+    @SecurityRequirement(name = "bearer-key")
     ApiResponse<List<PermissionReponese>> GetAllPermissions() {
         return ApiResponse.<List<PermissionReponese>>builder()
                 .result(permissionService.findAll())
@@ -37,6 +40,7 @@ public class PermissionController {
     }
 
     @DeleteMapping("/{permission}")
+    @SecurityRequirement(name = "bearer-key")
     ApiResponse<Void> DeletePermission(@PathVariable("permission") String permission) {
         permissionService.delete(permission);
         return ApiResponse.<Void>builder()

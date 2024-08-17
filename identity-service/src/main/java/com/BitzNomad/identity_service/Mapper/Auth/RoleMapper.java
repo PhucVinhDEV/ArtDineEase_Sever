@@ -2,10 +2,9 @@ package com.BitzNomad.identity_service.Mapper.Auth;
 
 import com.BitzNomad.identity_service.DtoReponese.RoleReponese;
 import com.BitzNomad.identity_service.DtoRequest.RoleRequest;
-import com.BitzNomad.identity_service.entity.Auth.Permission;
-import com.BitzNomad.identity_service.entity.Auth.Role;
-import com.BitzNomad.identity_service.repository.PermissionRepository;
-import lombok.*;
+import com.BitzNomad.identity_service.Entity.Auth.Permission;
+import com.BitzNomad.identity_service.Entity.Auth.Role;
+import com.BitzNomad.identity_service.Respository.PermissionRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;

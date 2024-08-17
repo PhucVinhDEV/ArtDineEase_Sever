@@ -2,18 +2,18 @@ package com.BitzNomad.identity_service.configuration;
 
 import com.BitzNomad.identity_service.contant.PredefinePermission;
 import com.BitzNomad.identity_service.contant.PredefineRole;
-import com.BitzNomad.identity_service.entity.Auth.Permission;
-import com.BitzNomad.identity_service.entity.Auth.Role;
-import com.BitzNomad.identity_service.entity.Auth.User;
-import com.BitzNomad.identity_service.repository.PermissionRepository;
-import com.BitzNomad.identity_service.repository.RoleRepository;
-import com.BitzNomad.identity_service.repository.UserRepository;
+import com.BitzNomad.identity_service.Entity.Auth.Permission;
+import com.BitzNomad.identity_service.Entity.Auth.Role;
+import com.BitzNomad.identity_service.Entity.Auth.User;
+import com.BitzNomad.identity_service.Respository.PermissionRepository;
+import com.BitzNomad.identity_service.Respository.RoleRepository;
+import com.BitzNomad.identity_service.Respository.UserRepository;
 import lombok.AccessLevel;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Bean;
@@ -24,7 +24,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Configuration
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -71,7 +70,7 @@ public class ApplicationConfig {
                     .build());
 
             Role userRole = roleRepository.save(Role.builder()
-                    .name(PredefineRole.OWNER_ROLE)
+                    .name(PredefineRole.USER_ROLE)
                     .description("User role")
                     .permissions(Set.of(
                     ))
@@ -85,12 +84,12 @@ public class ApplicationConfig {
                     .build());
 
             // Tạo user với role admin
-            if (userRepository.findByUsername("admin").isEmpty()) {
+            if (userRepository.findByEmail("admin").isEmpty()) {
                 Set<Role> roles = new HashSet<>();
                 roles.add(adminRole);
 
                 User user = User.builder()
-                        .username(ADMIN_USER_NAME)
+                        .email(ADMIN_USER_NAME)
                         .password(passwordEncoder.encode(ADMIN_PASSWORD))
                         .roles(roles)
                         .build();
@@ -107,7 +106,20 @@ public class ApplicationConfig {
 
     @Bean
     ModelMapper modelMapper() {
-        return new ModelMapper();
+        ModelMapper modelMapper = new ModelMapper();
+
+        // Cấu hình để tránh chuyển đổi kiểu dữ liệu không mong muốn
+        modelMapper.getConfiguration()
+                .setMatchingStrategy(MatchingStrategies.STRICT)
+                .setFieldMatchingEnabled(true)
+                .setSkipNullEnabled(true)
+                .setAmbiguityIgnored(true);
+//                .setFieldAccessLevel(Configuration.AccessLevel.PRIVATE);
+
+        // Nếu cần, bạn có thể thêm các ánh xạ cụ thể cho từng lớp ở đây
+        // Ví dụ: modelMapper.typeMap(SourceClass.class, DestinationClass.class).addMappings(...);
+
+        return modelMapper;
     }
 
 
