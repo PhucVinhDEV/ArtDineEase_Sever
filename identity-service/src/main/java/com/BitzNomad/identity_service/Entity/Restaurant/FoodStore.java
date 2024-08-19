@@ -29,7 +29,7 @@ public class FoodStore extends BaseEntity<String> {
 
     String phoneNumber;
 
-    boolean statusOfRestaurant;
+    boolean statusOfRestaurant = false;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

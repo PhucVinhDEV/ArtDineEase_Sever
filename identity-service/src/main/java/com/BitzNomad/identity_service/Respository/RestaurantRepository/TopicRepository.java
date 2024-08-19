@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 @Lazy
-public interface TopicRepository extends JpaRepository<Topic, Integer> {
+public interface TopicRepository extends JpaRepository<Topic, Long> {
 
 }

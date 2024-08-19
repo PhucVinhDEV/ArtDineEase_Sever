@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class FoodStoreRegisterRequestDTO {
 
+    Long foodStoreId;
     String name;
     String address;
     String description;
@@ -20,4 +21,5 @@ public class FoodStoreRegisterRequestDTO {
     MultipartFile[] multipartFiles;
     String typeOfImage;
     String email;
+    Long categoryId;
 }

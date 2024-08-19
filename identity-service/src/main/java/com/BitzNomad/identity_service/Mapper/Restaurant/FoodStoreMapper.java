@@ -8,7 +8,11 @@ import com.BitzNomad.identity_service.DtoRequest.FoodStoreRegisterRequestDTO;
 
 import com.BitzNomad.identity_service.Entity.Restaurant.FoodStore;
 
+import com.BitzNomad.identity_service.Entity.Restaurant.TopicFoodStore;
 import com.BitzNomad.identity_service.Mapper.ImageMapper;
+import com.BitzNomad.identity_service.Respository.RestaurantRepository.CategoryOfFoodStoreRepository;
+import com.BitzNomad.identity_service.Respository.RestaurantRepository.TopicOfFoodStoreRepository;
+import com.BitzNomad.identity_service.Respository.RestaurantRepository.TopicRepository;
 import com.BitzNomad.identity_service.Respository.UserRepository;
 import com.BitzNomad.identity_service.Service.CloudiaryService.CloudinaryService;
 import org.modelmapper.ModelMapper;
@@ -35,6 +39,15 @@ public class FoodStoreMapper {
     UserRepository userRepository;
 
     @Autowired
+    CategoryOfFoodStoreRepository categoryOfFoodStoreRepository;
+
+    @Autowired
+    TopicRepository topicRepository;
+
+    @Autowired
+    TopicOfFoodStoreRepository TopicOfFoodStoreRepository;
+
+    @Autowired
     CloudinaryService cloudinaryService;
 
     public FoodStoreReponese convertFoodStoreToFoodStoreReponese(FoodStore foodStore) {
@@ -49,11 +62,13 @@ public class FoodStoreMapper {
     }
 
     public FoodStore convertFoodStoreRequestToFoodStore(FoodStoreRegisterRequestDTO foodStoreRegisterRequestDTO) {
-        FoodStore restaurant = modelMapper.map(foodStoreRegisterRequestDTO, FoodStore.class);
-        log.info(foodStoreRegisterRequestDTO.getEmail());
-        restaurant.setOwner(userRepository.findByEmail(foodStoreRegisterRequestDTO.getEmail())
+        FoodStore foodStore = modelMapper.map(foodStoreRegisterRequestDTO, FoodStore.class);
+        foodStore.setOwner(userRepository.findByEmail(foodStoreRegisterRequestDTO.getEmail())
                 .orElseThrow(() -> new RuntimeException("User Not Found")));
-        return restaurant;
+        foodStore.setCatagory(categoryOfFoodStoreRepository.findById(foodStoreRegisterRequestDTO.getCategoryId()).orElseThrow(
+                () -> new RuntimeException("Category Not Found")
+        ));
+        return foodStore;
     }
 
 }

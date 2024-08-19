@@ -2,6 +2,7 @@ package com.BitzNomad.identity_service.RestController.Restaurant;
 
 import com.BitzNomad.identity_service.DtoReponese.ApiResponse;
 import com.BitzNomad.identity_service.DtoReponese.ProductResponeseDTO;
+import com.BitzNomad.identity_service.DtoRequest.ProductRegisterRequestDTO;
 import com.BitzNomad.identity_service.DtoRequest.ProductRequestDTO;
 import com.BitzNomad.identity_service.Service.RestaurantService.ProductService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -42,6 +43,15 @@ public class ProductRescontroller {
                 .status(200)
                 .message("Get Product Successfully")
                 .result(productService.findById(id))
+                .build();
+    }
+
+    @PostMapping("/Created")
+    public ApiResponse<Void> createProduct(@ModelAttribute ProductRegisterRequestDTO productRequestDTO) throws Exception {
+        productService.CreatedProduct(productRequestDTO);
+        return ApiResponse.<Void>builder()
+                .status(201)
+                .message("Created Product Successfully")
                 .build();
     }
 }

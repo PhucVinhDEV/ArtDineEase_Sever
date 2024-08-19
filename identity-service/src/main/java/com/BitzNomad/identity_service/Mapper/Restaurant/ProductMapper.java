@@ -2,6 +2,7 @@ package com.BitzNomad.identity_service.Mapper.Restaurant;
 
 import com.BitzNomad.identity_service.DtoReponese.ImageDTOReponese;
 import com.BitzNomad.identity_service.DtoReponese.ProductResponeseDTO;
+import com.BitzNomad.identity_service.DtoRequest.ProductRegisterRequestDTO;
 import com.BitzNomad.identity_service.DtoRequest.ProductRequestDTO;
 import com.BitzNomad.identity_service.Entity.Restaurant.Product;
 import com.BitzNomad.identity_service.Mapper.ImageMapper;
@@ -52,5 +53,15 @@ public class ProductMapper {
         return p;
     }
 
+    public Product ConvertProductRegisterToProduct(ProductRegisterRequestDTO productRegisterRequestDTO) {
+        Product p = modelMapper.map(productRegisterRequestDTO, Product.class);
+        p.setFoodStore(foodStoreRepository.findById(productRegisterRequestDTO.getFoodStoreId()).orElseThrow(
+                () -> new RuntimeException("notfound foodStoreID: " + productRegisterRequestDTO.getFoodStoreId())
+        ));
+        p.setCatagory(categoryOfProductRepository.findById(productRegisterRequestDTO.getCategoryId()).orElseThrow(
+                () -> new RuntimeException("notfound categoryID: " + productRegisterRequestDTO.getCategoryId())
+        ));
+        return p;
+    }
 
 }

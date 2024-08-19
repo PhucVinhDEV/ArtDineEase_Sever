@@ -23,16 +23,16 @@ public class FoodStoreController {
     FoodStoreMapper foodStoreMapper;
 
     @PostMapping("/Send-Requset")
-    public ApiResponse sentRequest(@RequestBody FoodStoreRegisterRequestDTO foodStoreRegisterRequestDTO) throws Exception {
+    public ApiResponse sentRequest(@ModelAttribute FoodStoreRegisterRequestDTO foodStoreRegisterRequestDTO) throws Exception {
         foodStoreService.SendRequestCreatedRestaurant(foodStoreRegisterRequestDTO);
         return ApiResponse.builder()
-                .message("Send Restaurant Successfully")
+                .message("Send FoodStore Successfully")
                 .status(201)
                 .build();
     }
 
     @PostMapping
-    public ApiResponse<FoodStoreReponese> saveRestaurant(@RequestBody FoodStoreRegisterRequestDTO foodStoreRegisterRequestDTO) throws Exception {
+    public ApiResponse<FoodStoreReponese> saveRestaurant(@ModelAttribute FoodStoreRegisterRequestDTO foodStoreRegisterRequestDTO) throws Exception {
         var foodStore = foodStoreMapper.convertFoodStoreRequestToFoodStore(foodStoreRegisterRequestDTO);
         var foodStoreReponeses = foodStoreService.save(foodStore);
         return ApiResponse.<FoodStoreReponese> builder()

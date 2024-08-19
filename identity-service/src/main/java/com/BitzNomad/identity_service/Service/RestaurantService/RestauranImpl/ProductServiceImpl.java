@@ -1,13 +1,16 @@
 package com.BitzNomad.identity_service.Service.RestaurantService.RestauranImpl;
 
 import com.BitzNomad.identity_service.DtoReponese.ProductResponeseDTO;
+import com.BitzNomad.identity_service.DtoRequest.ProductRegisterRequestDTO;
 import com.BitzNomad.identity_service.DtoRequest.ProductRequestDTO;
 import com.BitzNomad.identity_service.Entity.Restaurant.Product;
 import com.BitzNomad.identity_service.Mapper.Restaurant.ProductMapper;
 import com.BitzNomad.identity_service.Respository.RestaurantRepository.ProductRepository;
+import com.BitzNomad.identity_service.Service.CloudiaryService.ImageOfProductService;
 import com.BitzNomad.identity_service.Service.RestaurantService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Iterator;
 @Service
@@ -18,6 +21,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     ProductMapper productMapper;
+
+    @Autowired
+    ImageOfProductService imageOfProductService;
 
     @Override
     public ProductResponeseDTO findById(Long id) {
@@ -58,5 +64,12 @@ public class ProductServiceImpl implements ProductService {
     public Iterator<ProductResponeseDTO> findAll() {
         return productRepository.findAll().stream()
                 .map(productMapper::convertProductToProductResponeseDTO).iterator();
+    }
+
+    @Override
+    @Transactional
+    public void CreatedProduct(ProductRegisterRequestDTO productRegisterRequestDTO) throws Exception {
+        Product p = productRepository.save(productMapper.ConvertProductRegisterToProduct(productRegisterRequestDTO));
+        imageOfProductService.saveImageOfProduct(productRegisterRequestDTO.getMultipartFiles(), p.getId(),"MainImage");
     }
 }

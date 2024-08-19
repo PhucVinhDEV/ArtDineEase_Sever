@@ -11,6 +11,6 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ImageDTOReponese {
     String url;
-    String cloudinaryPublicUrl;
+    String cloudiaryPuclicUrl;
     String typeOfImg;
 }

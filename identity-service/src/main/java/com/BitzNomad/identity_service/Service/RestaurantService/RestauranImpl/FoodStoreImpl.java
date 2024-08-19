@@ -9,6 +9,7 @@ import com.BitzNomad.identity_service.Service.CloudiaryService.ImageOfFoodStoreS
 import com.BitzNomad.identity_service.Service.RestaurantService.FoodStoreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Iterator;
 
@@ -61,11 +62,12 @@ public class FoodStoreImpl implements FoodStoreService {
     }
 
     @Override
+    @Transactional
     public void SendRequestCreatedRestaurant(FoodStoreRegisterRequestDTO restaurantRequestDTO) throws Exception {
-            FoodStore foodStore = foodStoreMapper.convertFoodStoreRequestToFoodStore(restaurantRequestDTO);
-        foodStore.setStatusOfRestaurant(false);
-//            imageOfRestaurantService.saveImageOfRestaurant(restaurantRequestDTO.getMultipartFiles()
-//                    ,restaurantRepository.save(restaurant),IMAGE_MAIN_RESTAURANT);
+            FoodStore foodStore = foodStoreRepository.save(foodStoreMapper.convertFoodStoreRequestToFoodStore(restaurantRequestDTO));
+
+        imageOfFoodStoreService.saveImageOfFoodStore(restaurantRequestDTO.getMultipartFiles()
+                    ,foodStore.getId(),"MainImage");
     }
 
     @Override
