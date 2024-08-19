@@ -1,2 +1,2 @@
-web: cd identity-Service && java -jar target/your-application-name.jar
+web: cd identity-Service && java -jar target/identity-service-0.0.1-SNAPSHOT.jar
 
