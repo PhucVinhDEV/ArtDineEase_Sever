@@ -1,11 +1,11 @@
-package com.BitzNomad.identity_service.Service.RestaurantService.RestauranImpl;
+package com.BitzNomad.identity_service.Service.FoodStoreService.FoodStoreImpl;
 
 import com.BitzNomad.identity_service.DtoReponese.TopicReponese;
 import com.BitzNomad.identity_service.DtoRequest.TopicRequestDTO;
 import com.BitzNomad.identity_service.Entity.Restaurant.Topic;
 import com.BitzNomad.identity_service.Mapper.Restaurant.TopicMapper;
 import com.BitzNomad.identity_service.Respository.RestaurantRepository.TopicRepository;
-import com.BitzNomad.identity_service.Service.RestaurantService.TopicService;
+import com.BitzNomad.identity_service.Service.FoodStoreService.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

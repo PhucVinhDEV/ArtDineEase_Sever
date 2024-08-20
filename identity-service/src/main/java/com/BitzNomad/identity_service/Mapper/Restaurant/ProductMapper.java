@@ -29,6 +29,9 @@ public class ProductMapper {
     @Autowired
     ImageMapper imageMapper;
 
+    @Autowired
+    ProductSizeMapper productSizeMapper;
+
     public Product convertProductRequestToProduct(ProductRequestDTO productRequestDTO) {
         Product p = modelMapper.map(productRequestDTO, Product.class);
         p.setFoodStore(foodStoreRepository.findById(productRequestDTO.getFoodStoreID()).orElseThrow(
@@ -50,6 +53,12 @@ public class ProductMapper {
                    product.getImageOfProducts().stream().map(imageMapper::convertImgProductToImageDTOReponese).collect(Collectors.toSet())
            );
        }
+        if(product.getProductSizes()!=null && !product.getProductSizes().isEmpty()){
+            p.setProductSizeReponeseDTOSet(
+                    product.getProductSizes().stream().map(productSizeMapper::convertProductSizeToProductSizeReponeseDTO).collect(Collectors.toSet())
+            );
+        } else p.setProductSizeReponeseDTOSet(Set.of());
+
         return p;
     }
 

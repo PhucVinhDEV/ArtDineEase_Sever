@@ -1,10 +1,9 @@
-package com.BitzNomad.identity_service.RestController.Restaurant;
+package com.BitzNomad.identity_service.RestController.FoodStore;
 
 import com.BitzNomad.identity_service.DtoReponese.ApiResponse;
 import com.BitzNomad.identity_service.DtoReponese.CategoryOfProdcutReponeseDTO;
 import com.BitzNomad.identity_service.DtoRequest.CategoryOfProductRequestDTO;
-import com.BitzNomad.identity_service.Entity.Restaurant.CatagoryOfProduct;
-import com.BitzNomad.identity_service.Service.RestaurantService.CategoryOfProductService;
+import com.BitzNomad.identity_service.Service.FoodStoreService.CategoryOfProductService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.BitzNomad.identity_service.Service.RestaurantService;
+package com.BitzNomad.identity_service.Service.FoodStoreService;
 
 import com.BitzNomad.identity_service.DtoReponese.CategoryOfProdcutReponeseDTO;
 import com.BitzNomad.identity_service.DtoRequest.CategoryOfProductRequestDTO;

@@ -16,4 +16,7 @@ public class ProductResponeseDTO {
     String category;
 
     Set<ImageDTOReponese> imageDTOReponeseSet;
+
+    Set<ProductSizeReponeseDTO> productSizeReponeseDTOSet;
+
 }

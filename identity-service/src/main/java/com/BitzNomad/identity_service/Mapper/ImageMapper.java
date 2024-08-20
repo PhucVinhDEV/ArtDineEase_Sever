@@ -5,6 +5,7 @@ import com.BitzNomad.identity_service.Entity.Image.Banner;
 import com.BitzNomad.identity_service.Entity.Image.ImageOfFoodStore;
 import com.BitzNomad.identity_service.Entity.Image.ImageOfProduct;
 
+import com.BitzNomad.identity_service.Entity.Image.ImageOfProductSize;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,12 @@ public class ImageMapper {
         return modelMapper.map(imageOfProduct, ImageDTOReponese.class);
     }
 
+    public ImageDTOReponese convertImageProductSizeToImageDTOReponese(ImageOfProductSize imageOfProductSize) {
+        return modelMapper.map(imageOfProductSize, ImageDTOReponese.class);
+    }
+
     public ImageDTOReponese convertBanerToImageDTOReponese(Banner banner) {
         return modelMapper.map(banner, ImageDTOReponese.class);
     }
+
 }

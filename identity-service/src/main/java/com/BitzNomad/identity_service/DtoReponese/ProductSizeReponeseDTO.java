@@ -10,6 +10,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -23,10 +24,11 @@ public class ProductSizeReponeseDTO {
 
     BigDecimal price;
 
-    String productID;
-
     String productName;
 
     String sizeName;
+
+    Set<ImageDTOReponese> images;
+
 
 }

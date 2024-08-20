@@ -1,5 +1,6 @@
 package com.BitzNomad.identity_service.Entity.Restaurant;
 
+import com.BitzNomad.identity_service.Entity.BaseEntity;
 import com.BitzNomad.identity_service.Entity.Image.ImageOfProduct;
 import com.BitzNomad.identity_service.Entity.Image.ImageOfProductSize;
 import jakarta.persistence.*;
@@ -16,7 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-public class ProductSize {
+public class ProductSize extends BaseEntity<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;

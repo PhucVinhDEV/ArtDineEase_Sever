@@ -1,4 +1,4 @@
-package com.BitzNomad.identity_service.Service.RestaurantService.RestauranImpl;
+package com.BitzNomad.identity_service.Service.FoodStoreService.FoodStoreImpl;
 
 import com.BitzNomad.identity_service.DtoReponese.ProductResponeseDTO;
 import com.BitzNomad.identity_service.DtoRequest.ProductRegisterRequestDTO;
@@ -7,7 +7,7 @@ import com.BitzNomad.identity_service.Entity.Restaurant.Product;
 import com.BitzNomad.identity_service.Mapper.Restaurant.ProductMapper;
 import com.BitzNomad.identity_service.Respository.RestaurantRepository.ProductRepository;
 import com.BitzNomad.identity_service.Service.CloudiaryService.ImageOfProductService;
-import com.BitzNomad.identity_service.Service.RestaurantService.ProductService;
+import com.BitzNomad.identity_service.Service.FoodStoreService.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
