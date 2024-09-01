@@ -92,7 +92,7 @@ public class AuthenticationController {
             mailSend.setFrom("artdevk18@gmail.com");
             mailSend.setTo(Email);
             mailSend.setSubject("Verification Code for Password Change");
-            mailSend.setBody(formatEmailBody(verificationCode,user));
+            mailSend.setBody(formatEmailBody(verificationCode,user.getLastName()));
             try {
                 mailerService.send(mailSend);
                 return ApiResponse.<Integer>builder()
@@ -108,13 +108,43 @@ public class AuthenticationController {
         }
 
     }
+    @PostMapping(value = "/api/send-verify-register")
+    @SecurityRequirement(name = "bearer-key")
+    public ApiResponse<Integer> sendverify(@RequestBody UserCreateRequest request)  {
+        Random random = new Random();
+        int min = 100000;
+        int max = 999999;
+        int verificationCode = random.nextInt(max - min + 1) + min;
+//        User user = userService.getUserById(request.getEmail());
+        if( !userService.existsByUsername(request.getEmail())){
+            MailInfo mailSend = new MailInfo();
+            mailSend.setFrom("artdevk18@gmail.com");
+            mailSend.setTo(request.getEmail());
+            mailSend.setSubject("Verification Code for " + request.getFirstName() + " " + request.getLastName());
+            mailSend.setBody(formatEmailBody(verificationCode,request.getLastName()));
+            try {
+                mailerService.send(mailSend);
+                return ApiResponse.<Integer>builder()
+                        .message("send Verifi Code Successfully")
+                        .result(verificationCode)
+                        .build();
+            } catch (MessagingException e) {
+                throw new RuntimeException(e.getMessage());
+            }
+        }
+        else{
+            throw  new AppException(ErrorCode.EMAIL_EXISTED);
+        }
 
-    private String formatEmailBody(int verificationCode, User user) {
+    }
+
+
+    private String formatEmailBody(int verificationCode, String LastName) {
         return "<html>" +
                 "<body>" +
                 "<h2>Your Verification Code</h2>" +
-                "<p>Dear "+user.getLastName()+",</p>" +
-                "<p>Your verification code for password change is:</p>" +
+                "<p>Dear "+LastName+",</p>" +
+                "<p>Your verification code is:</p>" +
                 "<h3>" + verificationCode + "</h3>" +
                 "<p>Please use this code to verify your email address.</p>" +
                 "<br>" +

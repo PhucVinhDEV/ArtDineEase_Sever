@@ -34,7 +34,11 @@ public class RoleMapper {
 
     public RoleReponese ConvertToReponese(Role role) {
         RoleReponese reponese = modelMapper.map(role, RoleReponese.class);
-        reponese.setPermissions(role.getPermissions().stream().map(PermissionMapper::convertToReponese).collect(Collectors.toSet()));
+        if(reponese.getPermissions() != null || !reponese.getPermissions().isEmpty()) {
+            reponese.setPermissions(role.getPermissions().stream().map(PermissionMapper::convertToReponese).collect(Collectors.toSet()));
+        }else {
+            reponese.setPermissions(new HashSet<>());
+        }
         return  reponese;
     }
 }

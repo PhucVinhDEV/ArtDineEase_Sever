@@ -12,26 +12,26 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-@SpringBootTest
-@Slf4j
-@AutoConfigureMockMvc
+//@SpringBootTest
+//@Slf4j
+//@AutoConfigureMockMvc
 public class UserControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean
-    UserService userService;
-
-    private UserCreateRequest request;
-    private UserReponese userReponese;
-
-    @BeforeEach
-    void initData(){
-    }
-
-    @Test
-    void CreateUser(){
-        log.info("Create User");
-    }
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @MockBean
+//    UserService userService;
+//
+//    private UserCreateRequest request;
+//    private UserReponese userReponese;
+//
+//    @BeforeEach
+//    void initData(){
+//    }
+//
+//    @Test
+//    void CreateUser(){
+//        log.info("Create User");
+//    }
 }

@@ -53,7 +53,6 @@ class UserImplement implements UserService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         HashSet<Role> roles = new HashSet<>();
         roleRepository.findById(PredefineRole.USER_ROLE).ifPresent(roles::add);
-
         user.setRoles(roles);
         try {
             user = userRepository.save(user);

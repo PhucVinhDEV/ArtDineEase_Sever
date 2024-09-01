@@ -19,6 +19,6 @@ public class FoodStoreReponese {
     String address;
     String description;
     List<ImageDTOReponese> imageDTOReponeseList;
-
+    List<AttributeResponese> attributeResponeseList;
 
 }

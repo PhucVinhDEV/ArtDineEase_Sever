@@ -3,7 +3,7 @@ package com.BitzNomad.identity_service.Service.FoodStoreService.FoodStoreImpl;
 import com.BitzNomad.identity_service.DtoReponese.SizeReponeseDTO;
 import com.BitzNomad.identity_service.DtoRequest.SizeRequestDTO;
 import com.BitzNomad.identity_service.Entity.Restaurant.Size;
-import com.BitzNomad.identity_service.Mapper.Restaurant.SizeMapper;
+import com.BitzNomad.identity_service.Mapper.FoodStore.SizeMapper;
 import com.BitzNomad.identity_service.Respository.RestaurantRepository.SizeRepository;
 import com.BitzNomad.identity_service.Service.FoodStoreService.SizeService;
 import org.springframework.beans.factory.annotation.Autowired;

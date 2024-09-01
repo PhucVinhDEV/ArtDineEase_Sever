@@ -8,7 +8,7 @@ WORKDIR /app
 COPY . .
 
 # Build ứng dụng bằng Maven
-RUN mvn clean package
+RUN mvn clean package -e
 
 # Bước 2: Sử dụng một image JDK nhẹ để chạy ứng dụng
 FROM openjdk:17-jdk-slim

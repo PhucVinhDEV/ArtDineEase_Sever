@@ -1,6 +1,5 @@
-package com.BitzNomad.identity_service.Mapper.Restaurant;
+package com.BitzNomad.identity_service.Mapper.FoodStore;
 
-import com.BitzNomad.identity_service.DtoReponese.ImageDTOReponese;
 import com.BitzNomad.identity_service.DtoReponese.ProductResponeseDTO;
 import com.BitzNomad.identity_service.DtoRequest.ProductRegisterRequestDTO;
 import com.BitzNomad.identity_service.DtoRequest.ProductRequestDTO;

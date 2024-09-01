@@ -14,12 +14,14 @@ public enum ErrorCode {
     USER_INVALID(1003,"User must be at least 3 characters long",HttpStatus.BAD_REQUEST),
     PASSWORD_INVALID(1004,"Password must be at least 3 characters long",HttpStatus.BAD_REQUEST),
     USER_NOT_EXISTED(1005,"User not existed",HttpStatus.NOT_FOUND),
+    EMAIL_EXISTED(1006,"Email existed",HttpStatus.BAD_REQUEST),
     UNAUTHENTICATED(1006,"Unauthenticated",HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1007, "You do not have permission", HttpStatus.FORBIDDEN),
     FILE_EMPTY(1007, "File is empty", HttpStatus.FORBIDDEN),
     IMAGE_ERROR(1008, "Image upload error", HttpStatus.FORBIDDEN),
     INVALID_DOB(1008, "Your age must be at least {min}", HttpStatus.BAD_REQUEST),
     INVALID_DUONG(1009, "Your name must be at least {name}", HttpStatus.BAD_REQUEST),
+
     ;
     private int code;
     private String message;

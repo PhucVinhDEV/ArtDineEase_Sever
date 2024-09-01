@@ -10,4 +10,5 @@ public class CategoryOfFoodStoreReponeseDTO {
     String name;
     String description;
     Set<FoodStoreReponese> foodStoreReponeseSet;
+    ImageDTOReponese imageDTOReponese;
 }

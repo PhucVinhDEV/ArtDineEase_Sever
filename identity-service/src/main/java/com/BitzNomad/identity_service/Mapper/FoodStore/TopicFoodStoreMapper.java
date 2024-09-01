@@ -1,4 +1,4 @@
-package com.BitzNomad.identity_service.Mapper.Restaurant;
+package com.BitzNomad.identity_service.Mapper.FoodStore;
 
 import com.BitzNomad.identity_service.DtoRequest.TopicFoodStoreRequest;
 import com.BitzNomad.identity_service.Entity.Restaurant.TopicFoodStore;

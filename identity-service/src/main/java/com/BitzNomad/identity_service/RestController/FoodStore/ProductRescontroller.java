@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Iterator;
+import java.util.List;
 
 @RestController
 @RequestMapping("/Product")
@@ -37,12 +38,21 @@ public class ProductRescontroller {
                 .build();
     }
 
-    @GetMapping("/Id")
+    @GetMapping("/ProductId")
     public ApiResponse<ProductResponeseDTO> getProductById(@RequestParam Long id) {
         return ApiResponse.<ProductResponeseDTO>builder()
                 .status(200)
                 .message("Get Product Successfully")
                 .result(productService.findById(id))
+                .build();
+    }
+
+    @GetMapping("/FoodStoreId")
+    public ApiResponse<List<ProductResponeseDTO>> getProductByFoodStoreId(@RequestParam Long id) throws Exception {
+        return ApiResponse.<List<ProductResponeseDTO>>builder()
+                .status(200)
+                .message("Get Product Successfully")
+                .result(productService.GetAllProductsByFoodstoreID(id))
                 .build();
     }
 

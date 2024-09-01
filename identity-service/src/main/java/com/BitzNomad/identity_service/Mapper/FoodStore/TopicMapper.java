@@ -1,9 +1,9 @@
-package com.BitzNomad.identity_service.Mapper.Restaurant;
+package com.BitzNomad.identity_service.Mapper.FoodStore;
 
 import com.BitzNomad.identity_service.DtoReponese.FoodStoreReponese;
+import com.BitzNomad.identity_service.DtoReponese.FootstoreReponeseBanner;
 import com.BitzNomad.identity_service.DtoReponese.TopicReponese;
 import com.BitzNomad.identity_service.DtoRequest.TopicRequestDTO;
-import com.BitzNomad.identity_service.Entity.Restaurant.FoodStore;
 import com.BitzNomad.identity_service.Entity.Restaurant.Topic;
 import com.BitzNomad.identity_service.Entity.Restaurant.TopicFoodStore;
 import org.modelmapper.ModelMapper;
@@ -29,11 +29,11 @@ public class TopicMapper {
 
     public TopicReponese convertTopicToTopicReponese(Topic topic) {
         TopicReponese topicReponese = modelMapper.map(topic, TopicReponese.class);
-        Set<FoodStoreReponese> foodStoreResponses = Optional.ofNullable(topic.getTopicFoodStores())
+        Set<FootstoreReponeseBanner> foodStoreResponses = Optional.ofNullable(topic.getTopicFoodStores())
                 .orElse(Set.of()) // Nếu là null, trả về Set rỗng
                 .stream()
                 .map(TopicFoodStore::getFoodStore)
-                .map(foodStoreMapper::convertFoodStoreToFoodStoreReponese)
+                .map(foodStoreMapper::convertFoodStoreToFoodStoreReponeseBanner)
                 .collect(Collectors.toSet());
         topicReponese.setTopicFoodStores(foodStoreResponses);
         return topicReponese;

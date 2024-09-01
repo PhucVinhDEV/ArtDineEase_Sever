@@ -1,4 +1,4 @@
-package com.BitzNomad.identity_service.Mapper.Restaurant;
+package com.BitzNomad.identity_service.Mapper.FoodStore;
 
 
 import com.BitzNomad.identity_service.DtoReponese.CategoryOfProdcutReponeseDTO;
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.stream.Collectors;
 
 @Component

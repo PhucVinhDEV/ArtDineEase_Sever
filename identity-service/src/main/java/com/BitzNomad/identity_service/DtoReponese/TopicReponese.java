@@ -8,5 +8,5 @@ import java.util.Set;
 public class TopicReponese {
     Long id;
     String name;
-    Set<FoodStoreReponese> topicFoodStores;
+    Set<FootstoreReponeseBanner> topicFoodStores;
 }

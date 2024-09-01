@@ -37,8 +37,13 @@ public class SecurityConfig {
 
     private final String[] PUBLIC_ENDPONIT = {"/api/user","/auth/login"
             ,"/auth/logout","/auth/instrospec","/auth/refesh",
-            "/auth/outbound/authentication","/user/myinfo"};
+            "/auth/outbound/authentication","/user/myinfo","/CategoryOfFoodStore","/Topic"
+            ,"/auth/api/send-verify-register","/auth/api/send-verify"};
 
+    private  final String[] Get_Public_endpoint = {
+            "/Topic","/CategoryOfFoodStore","/FoodStore/","/FoodStore/*","/Topic/*","/Topic",
+            "/sections/*","/Product/*"
+    };
     // phai dc tat truoc khi public Error *********************************
     private final String[] PUBLIC_SWAGGER = {"/swagger-ui/*","/swagger-ui-custom.html"
             , "/v3/api-docs/*", "/api-docs/*","/api-docs"};
@@ -54,7 +59,8 @@ public class SecurityConfig {
         //Config endponit authentication
         httpSecurity.authorizeRequests(request -> request
                         .requestMatchers(HttpMethod.POST,PUBLIC_ENDPONIT).permitAll()
-                .requestMatchers(PUBLIC_SWAGGER).permitAll() // Công khai các đường dẫn Swagger
+                .requestMatchers(PUBLIC_SWAGGER).permitAll()
+                .requestMatchers(HttpMethod.GET,Get_Public_endpoint).permitAll()// Công khai các đường dẫn Swagger
                 .anyRequest().authenticated());
 
         //config oauth2
@@ -90,7 +96,7 @@ public class SecurityConfig {
     public CorsFilter corsFilter(){
         CorsConfiguration config = new CorsConfiguration();
 
-        config.addAllowedOrigin("http://localhost:3000");
+        config.addAllowedOrigin("*");
         config.addAllowedMethod("*");
         config.addAllowedHeader("*");
 

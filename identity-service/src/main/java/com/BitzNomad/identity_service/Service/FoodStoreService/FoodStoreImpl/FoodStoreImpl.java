@@ -3,7 +3,7 @@ package com.BitzNomad.identity_service.Service.FoodStoreService.FoodStoreImpl;
 import com.BitzNomad.identity_service.DtoReponese.FoodStoreReponese;
 import com.BitzNomad.identity_service.DtoRequest.FoodStoreRegisterRequestDTO;
 import com.BitzNomad.identity_service.Entity.Restaurant.FoodStore;
-import com.BitzNomad.identity_service.Mapper.Restaurant.FoodStoreMapper;
+import com.BitzNomad.identity_service.Mapper.FoodStore.FoodStoreMapper;
 import com.BitzNomad.identity_service.Respository.RestaurantRepository.FoodStoreRepository;
 import com.BitzNomad.identity_service.Service.CloudiaryService.ImageOfFoodStoreService;
 import com.BitzNomad.identity_service.Service.FoodStoreService.FoodStoreService;
@@ -28,7 +28,9 @@ public class FoodStoreImpl implements FoodStoreService {
     @Override
     public FoodStoreReponese findById(Long id) {
         return foodStoreMapper.convertFoodStoreToFoodStoreReponese(
-                foodStoreRepository.findById(id).orElseThrow(RuntimeException::new)
+                foodStoreRepository.findById(id).orElseThrow(
+                        () -> new RuntimeException("foodstore not found!")
+                )
         );
     }
 

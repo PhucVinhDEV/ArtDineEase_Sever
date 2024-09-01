@@ -1,9 +1,8 @@
-package com.BitzNomad.identity_service.Mapper.Restaurant;
+package com.BitzNomad.identity_service.Mapper.FoodStore;
 
 import com.BitzNomad.identity_service.DtoReponese.ProductSizeReponeseDTO;
 import com.BitzNomad.identity_service.DtoRequest.ProductSizeRegisterRequestDTO;
 import com.BitzNomad.identity_service.DtoRequest.ProductSizeRequestDTO;
-import com.BitzNomad.identity_service.Entity.Restaurant.Product;
 import com.BitzNomad.identity_service.Entity.Restaurant.ProductSize;
 import com.BitzNomad.identity_service.Mapper.ImageMapper;
 import com.BitzNomad.identity_service.Respository.RestaurantRepository.ProductRepository;

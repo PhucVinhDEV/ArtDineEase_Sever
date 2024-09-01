@@ -3,7 +3,7 @@ package com.BitzNomad.identity_service.Service.FoodStoreService.FoodStoreImpl;
 import com.BitzNomad.identity_service.DtoReponese.TopicReponese;
 import com.BitzNomad.identity_service.DtoRequest.TopicRequestDTO;
 import com.BitzNomad.identity_service.Entity.Restaurant.Topic;
-import com.BitzNomad.identity_service.Mapper.Restaurant.TopicMapper;
+import com.BitzNomad.identity_service.Mapper.FoodStore.TopicMapper;
 import com.BitzNomad.identity_service.Respository.RestaurantRepository.TopicRepository;
 import com.BitzNomad.identity_service.Service.FoodStoreService.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,6 +53,6 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public Iterator<TopicReponese> findAll() {
-        return topicRepository.findAll().stream().map(topicMapper::convertTopicToTopicReponese).iterator();
+        return topicRepository.findAllByIsDeleted(false).stream().map(topicMapper::convertTopicToTopicReponese).iterator();
     }
 }

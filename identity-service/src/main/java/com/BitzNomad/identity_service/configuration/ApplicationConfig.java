@@ -30,7 +30,7 @@ import java.util.Set;
 @Slf4j
 public class ApplicationConfig {
     @NonFinal
-    static final String ADMIN_USER_NAME = "admin";
+    static final String ADMIN_USER_NAME = "admin@gmail.com";
 
     @NonFinal
     static final String ADMIN_PASSWORD = "admin";

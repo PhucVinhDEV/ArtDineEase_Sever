@@ -3,12 +3,19 @@ package com.BitzNomad.identity_service.DtoRequest;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
+@Getter
+@Setter
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class AuthenticationRequest {
-    String email;
-    String password;
+public class AttributeRequestDTO {
+
+    Long id;
+
+    String AtrributeName;
+
+    String AttributeValue;
+
+    Long foodstoreId;
 }

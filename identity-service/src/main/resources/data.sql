@@ -55,4 +55,4 @@ INSERT INTO size (name, description, created_by, created_date, last_modified_by,
             ('Large', 'Kích thước lớn, phù hợp với các sản phẩm có khẩu phần lớn hoặc dành cho nhiều người.', 'admin', NOW(), 'admin', NOW(), 0),
             ('Extra Large', 'Kích thước cực lớn, thường dùng cho các sản phẩm đặc biệt lớn hoặc cho nhóm lớn người dùng.', 'admin',  NOW(), 'admin',NOW(), 0);
 
-select * from product_size;
+select * from section;

@@ -7,6 +7,7 @@ import com.BitzNomad.identity_service.DtoRequest.*;
 import com.BitzNomad.identity_service.Exception.AppException;
 import com.BitzNomad.identity_service.Exception.ErrorCode;
 import com.BitzNomad.identity_service.Mapper.Auth.UserMapper;
+import com.BitzNomad.identity_service.Respository.RoleRepository;
 import com.BitzNomad.identity_service.Utils.RandomPasswordGenerator;
 import com.BitzNomad.identity_service.contant.PredefineRole;
 import com.BitzNomad.identity_service.Entity.InvalidatedToken;
@@ -89,9 +90,11 @@ public class AuthenticationService {
 
     @Autowired
     MailerService mailerService;
+    @Autowired
+    private RoleRepository roleRepository;
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        var user = userRepository.findByEmail(request.getUsername()).orElseThrow(() -> new AppException(ErrorCode.UserExitsted));
+        var user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new AppException(ErrorCode.UserExitsted));
         boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
         if (!authenticated) {
             throw new AppException(ErrorCode.USER_NOT_EXISTED);
@@ -233,10 +236,12 @@ public class AuthenticationService {
 
         var userInfo = outboundUserClient.GetUserInfo("json",response.getAccessToken());
         Set<Role> roles = new HashSet<>();
-        roles.add(Role.builder()
-                .name(PredefineRole.USER_ROLE)
-                .build());
-        var password = RandomPasswordGenerator.generateRandomPassword(8);
+        roles.add(roleRepository.findById(PredefineRole.USER_ROLE).orElseThrow(
+                () -> new RuntimeException("Role not found")
+        ));
+
+
+        String password = RandomPasswordGenerator.generateRandomPassword(8);
         var user = userRepository.findByEmail(userInfo.getEmail()).orElseGet(
                 () -> userRepository.save(User.builder()
                                 .firstName(userInfo.getGivenName())
@@ -260,11 +265,9 @@ public class AuthenticationService {
         mailSend.setBody(formatEmailBody(u,password));
         try {
             mailerService.send(mailSend);
-
         } catch (MessagingException e) {
             throw new RuntimeException(e.getMessage());
         }
-
         return AuthenticationResponse.builder()
                 .authenticated(true)
                 .token(token)

@@ -1,5 +1,6 @@
 package com.BitzNomad.identity_service.Entity.Restaurant;
 
+import com.BitzNomad.identity_service.Entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -11,13 +12,11 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
-public class MenuSection {
+public class MenuSection extends BaseEntity<String> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long Id;
 
-    String title;
-    String description;
 
     @ManyToOne
     @JoinColumn(name = "section_id" , nullable = false)
