@@ -8,6 +8,7 @@ import com.BitzNomad.identity_service.DtoRequest.UserUpdateRequest;
 import com.BitzNomad.identity_service.Exception.AppException;
 import com.BitzNomad.identity_service.Exception.ErrorCode;
 import com.BitzNomad.identity_service.Mapper.Auth.UserMapper;
+import com.BitzNomad.identity_service.Respository.httpclient.CreatedInterfaceClient;
 import com.BitzNomad.identity_service.Service.AuthService.UserService;
 import com.BitzNomad.identity_service.Service.MailerService;
 
@@ -40,6 +41,9 @@ class UserImplement implements UserService {
     RoleRepository roleRepository;
 
     @Autowired
+    CreatedInterfaceClient createdInterfaceClient;
+
+    @Autowired
     UserMapper userMapper;
 
     @Autowired
@@ -59,7 +63,7 @@ class UserImplement implements UserService {
         } catch (DataIntegrityViolationException exception) {
             throw new AppException(ErrorCode.USER_NOT_EXISTED);
         }
-
+        createdInterfaceClient.createUserProfile(request);
         // Return the saved user entity
 
         return userMapper.convertUserToReponese(user);
